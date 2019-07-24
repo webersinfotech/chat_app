@@ -1,12 +1,22 @@
 const express = require('express');
-const mongo = require('../mongo');
+const Mongos = require('../mongo');
 const Formats = require("../formats");
 const Responses = require("../responses");
 const Validations = require('../validations');
 const format = new Formats();
 const response = new Responses();
 const validation = new Validations();
+const mongo = new Mongos();
 const router = express.Router();
+
+router.get('/create', async (req, res) => {
+    const agents = await mongo.fetch_agent({})
+    if(agents.length >= 1){
+        res.send('REDIRECT');
+        return;
+    }
+    res.sendfile(`${__basedir}/public/html/agent.html`)
+})
 
 router.post('/create', async (req, res) => {
     try{
@@ -21,6 +31,8 @@ router.post('/create', async (req, res) => {
         res.send(response.agent_created());
     }
     catch(Error){
+        console.error(Error);
+        //util.send_error(Error);
         res.send(response.server_error());
     }
 })
