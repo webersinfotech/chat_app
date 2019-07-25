@@ -122,7 +122,7 @@ IO.on('connection', async (socket) => {
     socket.on('typing', async () => {
         try{
             const session_data = await receiver_data(socket.id);
-            socket.to(session_data.receiver_session[0].socket_id).emit('typing')
+        socket.to(session_data.receiver_session[0].socket_id).emit('typing')
         }
         catch(Error){
             console.error(Error);
@@ -135,7 +135,7 @@ IO.on('connection', async (socket) => {
             await mongo.delete_session(query.destroy_session(socket.id));
         }
         catch(Error){
-            console.error(Error);
+            console.log(Error);
         }
     })
 })

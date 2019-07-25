@@ -135,7 +135,7 @@ IO.on('connection', async (socket) => {
             await mongo.delete_session(query.destroy_session(socket.id));
         }
         catch(Error){
-            console.error(Error);
+            console.log(Error);
         }
     })
 })

@@ -109,9 +109,9 @@ IO.on('connection', async (socket) => {
 
     socket.on('message', async (data) => {
         try{
-            const session_data = await receiver_data(socket.id);
             await mongo.store_message(format.create_message(data));
-            socket.to(session_data.receiver_session[0].socket_id).emit('message', data)
+            console.log(receiver_session[0].socket_id);
+            socket.to(receiver_session[0].socket_id).emit('message', data)
         }
         catch(Error){
             console.error(Error);
@@ -120,14 +120,7 @@ IO.on('connection', async (socket) => {
     })
 
     socket.on('typing', async () => {
-        try{
-            const session_data = await receiver_data(socket.id);
-            socket.to(session_data.receiver_session[0].socket_id).emit('typing')
-        }
-        catch(Error){
-            console.error(Error);
-            //util.send_error(Error);
-        }
+        console.log("User is typing");
     })
 
     socket.on('disconnect', async () => {
@@ -135,20 +128,14 @@ IO.on('connection', async (socket) => {
             await mongo.delete_session(query.destroy_session(socket.id));
         }
         catch(Error){
-            console.error(Error);
+            console.log(Error);
         }
     })
 })
 
-function receiver_data(socket_id){
-    return new Promise(async (res, rej) => {
-        const session_data = await mongo.fetch_session(query.fetch_session(socket_id));
-        if(session_data.length <= 0) rej();
-        const receiver_session = await mongo.fetch_session(query.fetch_receiver_session(session_data[0].receiver_id));
-        if(receiver_session.length <= 0) rej();
-        res({
-            session_data: session_data,
-            receiver_session: receiver_session
-        })
-    })
+function receiver_data(){
+    const session_data = await mongo.fetch_session(query.fetch_session(socket.id));
+    if(session_data.length <= 0) return;
+    const receiver_session = await mongo.fetch_session(query.fetch_receiver_session(session_data[0].receiver_id));
+    if(receiver_session.length <= 0) return;
 }

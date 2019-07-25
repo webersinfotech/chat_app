@@ -17,7 +17,7 @@ $(function(){
     });
 
     socket.on('message', function(data){
-        $('#last_message').before(`<div class="incoming_msg" id="typing_message"> <div class="received_msg"> <div class="received_withd_msg"> <p>${data.message}</p></div> </div> </div>`)
+        console.log(data);
     })
 
     socket.on('typing', function(){
@@ -37,10 +37,9 @@ $(function(){
 
     $('#send_msg').on('click', function(event){
         event.preventDefault();
-        $('#last_message').before(`<div class="outgoing_msg"> <div class="sent_msg"> <p>${$("#msg_text").val()}</p> </div> </div>`);
+        $('#').before(`<div class="outgoing_msg"> <div class="sent_msg"> <p>${}</p> </div> </div>`);
         socket.emit('message', {
             message: $("#msg_text").val()
         });
-        $("#msg_text").val('');
     })
 });

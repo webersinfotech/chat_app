@@ -6,7 +6,7 @@ const {
 const Utils = require('./utils');
 const user = require('./models/user');
 const agent = require('./models/agent');
-const message = require('./models/message');
+const message = require('./models/user');
 const session = require('./models/session');
 const util = new Utils();
 

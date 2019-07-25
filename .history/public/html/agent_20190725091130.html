@@ -48,7 +48,7 @@
         function account_created(response){
             if(response.status === 201){
                 alert('Account successfuully created');
-                window.location.replace(`${host}agent`);
+                window.location.replace(`${host}user`);
                 return;
             }
             alert('Account creation failed.');
