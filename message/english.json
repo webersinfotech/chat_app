@@ -2,5 +2,7 @@
     "internal_server_error": "Internal server error",
     "user_successfully_created": "User successfully created",
     "agent_successfully_created": "Agent successfully created",
-    "form_validation_failed": "Form validation failed"
+    "form_validation_failed": "Form validation failed",
+    "error_subject": "Error Ocurred on chat app",
+    "error_message": "Host: %s <br><br> Message: %s"
 }
